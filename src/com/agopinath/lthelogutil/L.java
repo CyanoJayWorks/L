@@ -42,28 +42,42 @@ public final class L {
 		STREAMS.addLStream(LConsoleStream.getInstance());
 	}
 	
-	public static final void addLStream(LStream newStream) {
-		STREAMS.addLStream(newStream);
+	/**
+	 * Registers a new <code>LStream</code> with the specified
+	 * name and adds it to the list of <code>LStream</code>s to
+	 * log to.
+	 * @param newLStream - new <code>LStream</code> to add.
+	 * @param newLStreamID - name of the new <code>LStream</code>.
+	 */
+	public static final void addLStream(LStream newLStream, String newLStreamID) {
+		newLStream.setLStreamID(newLStreamID);
+		STREAMS.addLStream(newLStream);
 	}
 	
+	/**
+	 * De-registers the <code>LStream</code> with the specified
+	 * name and removes it from the list of <code>LStream</code>s to
+	 * log to.
+	 * @param newLStreamID - name of the <code>LStream</code> to remove.
+	 */
 	public static final void remoteLStream(String lStreamID) {
 		STREAMS.removeLStream(lStreamID);
 	}
 	
 	/**
 	 * Logs the given String to the registered <code>LStream</code>s
-	 * @param toPrint - the String to be logged.
+	 * @param toLog - the String to be logged.
 	 * @return The same String that was logged.
 	 */
-	public static final String og(final String toPrint) {
+	public static final String og(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		for(;lStreamsIt.hasNext(); ) {
 			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite(toPrint);
+			currStream.streamWrite(toLog);
 		}
 		
-		return toPrint;
+		return toLog;
 	}
 	
 	/**
@@ -71,18 +85,18 @@ public final class L {
 	 * Differs from the method <code>og</code> in that
 	 * "ERROR: " is appended to the beginning of the text, and should
 	 * be used to debug errors.
-	 * @param toPrint - the String to be logged.
+	 * @param toLog - the String to be logged.
 	 * @return The same String that was logged.
 	 */
-	public static final String err(final String toPrint) {
+	public static final String err(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		for(;lStreamsIt.hasNext(); ) {
 			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite("ERROR: " + toPrint);
+			currStream.streamWrite("ERROR: " + toLog);
 		}
 		
-		return toPrint;
+		return toLog;
 	}
 	
 	/**
@@ -90,17 +104,17 @@ public final class L {
 	 * Differs from the method <code>og</code> in that
 	 * "DEBUG: " is appended to the beginning of the text, and should
 	 * be used for general command-debugging.
-	 * @param toPrint - the String to be logged.
+	 * @param toLog - the String to be logged.
 	 * @return The same String that was logged.
 	 */
-	public static final String dbg(final String toPrint) {
+	public static final String dbg(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		for(;lStreamsIt.hasNext(); ) {
 			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite("DEBUG: " + toPrint);
+			currStream.streamWrite("DEBUG: " + toLog);
 		}
 		
-		return toPrint;
+		return toLog;
 	}
 }

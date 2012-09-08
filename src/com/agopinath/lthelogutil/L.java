@@ -32,19 +32,19 @@ import com.agopinath.lthelogutil.streams.LStream;
  *
  */
 public final class L {
-	private static final LStreamList STREAMS;
+	private static final LStreamSet STREAMS;
 	
 	// prevent instantiation
 	private L() {}
 	
 	static {
-		STREAMS = new LStreamList(5);
+		STREAMS = new LStreamSet(5);
 		STREAMS.addLStream(LConsoleStream.getInstance());
 	}
 	
 	/**
 	 * Registers a new <code>LStream</code> with the specified
-	 * name and adds it to the list of <code>LStream</code>s to
+	 * name and adds it to the set of <code>LStream</code>s to
 	 * log to.
 	 * @param newLStream - new <code>LStream</code> to add.
 	 * @param newLStreamID - name of the new <code>LStream</code>.
@@ -56,9 +56,9 @@ public final class L {
 	
 	/**
 	 * De-registers the <code>LStream</code> with the specified
-	 * name and removes it from the list of <code>LStream</code>s to
+	 * name and removes it from the set of <code>LStream</code>s to
 	 * log to.
-	 * @param newLStreamID - name of the <code>LStream</code> to remove.
+	 * @param lStreamID - name of the <code>LStream</code> to remove.
 	 */
 	public static final void remoteLStream(String lStreamID) {
 		STREAMS.removeLStream(lStreamID);

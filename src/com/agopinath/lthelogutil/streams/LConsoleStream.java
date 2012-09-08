@@ -28,7 +28,12 @@ package com.agopinath.lthelogutil.streams;
  */
 public class LConsoleStream extends LStream {
 	
-	private static final LConsoleStream INSTANCE = new LConsoleStream();
+	private static final LConsoleStream INSTANCE;
+	
+	static {
+		 INSTANCE = new LConsoleStream();
+		 INSTANCE.setLStreamID("stdOutput");
+	}
 	
 	// prevent instantiation
 	private LConsoleStream() {}

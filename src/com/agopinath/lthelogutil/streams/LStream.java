@@ -57,4 +57,12 @@ public abstract class LStream implements ILStream {
 	public String getLStreamID() {
 		return this.lStreamID;
 	}
+	
+	public boolean equals(Object other) {
+		return this.lStreamID.equals(((LStream) other).lStreamID);
+	}
+	
+	public int hashCode() {
+		return this.lStreamID.hashCode();
+	}
 }

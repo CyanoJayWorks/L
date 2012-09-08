@@ -18,48 +18,39 @@
 
 package com.agopinath.lthelogutil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import com.agopinath.lthelogutil.streams.LStream;
 
 /**
- * Represents a list of <code>LStream</code>s
+ * Represents a set of <code>LStream</code>s
  * to be iterated over when logging.
  * @author Ajay
  *
  */
-public class LStreamList {
-	private final List<LStream> internalStreams;
+public class LStreamSet {
+	private final Set<LStream> internalStreams;
 	
-	public LStreamList(final int streamListSize) {
-		internalStreams = Collections.synchronizedList(new ArrayList<LStream>(streamListSize));
+	public LStreamSet(final int streamListSize) {
+		internalStreams = Collections.synchronizedSet(new HashSet<LStream>(streamListSize));
 	}
 	
-	public LStreamList() {
+	public LStreamSet() {
 		this(5);
 	}
 	
 	/**
 	 * Adds the specified <code>LStream</code> to the internal
-	 * list of <code>LStream</code>s. Duplicate <code>LStream</code>s
+	 * set of <code>LStream</code>s. Duplicate <code>LStream</code>s
 	 * (determined by the IDs) are not allowed;
 	 * @param newStream - the <code>LStream</code> to add.
 	 * @return whether or not the operation succeeded.
 	 */
 	public boolean addLStream(final LStream newStream) {
-		for(int i = 0; i < internalStreams.size(); i++) {
-			LStream currLStream = internalStreams.get(i);
-			
-			if(currLStream.getLStreamID().equalsIgnoreCase(newStream.getLStreamID())) {
-				return false;
-			}
-		}
-		
-		internalStreams.add(newStream);
-		return true;
+		return internalStreams.add(newStream);
 	}
 	
 	/**
@@ -69,11 +60,9 @@ public class LStreamList {
 	 * @return whether or not the operation succeeded.
 	 */
 	public boolean removeLStream(final String lStreamID) {
-		for(int i = 0; i < internalStreams.size(); i++) {
-			LStream currLStream = internalStreams.get(i);
-			
+		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) {
-				internalStreams.remove(i);
+				internalStreams.remove(currLStream);
 				return true;
 			}
 		}
@@ -86,9 +75,7 @@ public class LStreamList {
 	 * @param lStreamID - ID of the <code>LStream</code> to retrieve.
 	 */
 	public LStream getLStreamByName(final String lStreamID) {
-		for(int i = 0; i < internalStreams.size(); i++) {
-			LStream currLStream = internalStreams.get(i);
-			
+		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) 
 				return currLStream;
 		}
@@ -97,12 +84,12 @@ public class LStreamList {
 	}
 	
 	/**
-	 * Returns an <code>ListIterator</code> over the
-	 * <code>LStream</code>s in the internal list of <code>LStream</code>s.
+	 * Returns an <code>Iterator</code> over the
+	 * <code>LStream</code>s in the internal set of <code>LStream</code>s.
 	 */
-	public ListIterator<LStream> getLStreamIterator() {
+	public Iterator<LStream> getLStreamIterator() {
 		synchronized(internalStreams) {
-			return internalStreams.listIterator();
+			return internalStreams.iterator();
 		}
 	}
 }

@@ -18,12 +18,17 @@
 
 package com.agopinath.lthelogutil;
 
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
+import com.agopinath.lthelogutil.streams.LConsoleStream;
+import com.agopinath.lthelogutil.streams.LStream;
 
 /**
  * Provides logging functionality designed with very brief method calls
@@ -34,9 +39,14 @@ import javax.swing.SwingUtilities;
  *
  */
 public final class L {
+	private static LStream STREAM;
 	
 	// prevent instantiation
 	private L() {}
+	
+	static {
+		STREAM = new LConsoleStream();
+	}
 	
 	/**
 	 * Prints out a String to the "standard" output stream.
@@ -44,7 +54,7 @@ public final class L {
 	 * @return The same String that was printed.
 	 */
 	public static final String og(final String toPrint) {
-		System.out.println(toPrint);
+		STREAM.streamWrite(toPrint);
 		return toPrint;
 	}
 	
@@ -57,7 +67,7 @@ public final class L {
 	 * @return The same String that was printed.
 	 */
 	public static final String err(final String toPrint) {
-		System.out.println("ERROR: " + toPrint);
+		STREAM.streamWrite("ERROR: " + toPrint);
 		return toPrint;
 	}
 	
@@ -70,7 +80,7 @@ public final class L {
 	 * @return The same String that was printed.
 	 */
 	public static final String dbg(final String toPrint) {
-		System.out.println("DEBUG: " + toPrint);
+		STREAM.streamWrite("DEBUG: " + toPrint);
 		return toPrint;
 	}
 	
@@ -81,6 +91,11 @@ public final class L {
 	 * @return The same String that was displayed.
 	 */
 	public static final String vis(final String toDisplay) {
+		if(GraphicsEnvironment.isHeadless()) {
+			internalErr("calling vis(java.lang.String) on headless system");
+			return null;
+		}
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -109,7 +124,7 @@ public final class L {
 	}
 	
 	/**
-	 * Prints out a String to the specified <code>OutputStream</code>,
+	 * Prints out a String to the specified <code>OutputStream</cod e>,
 	 * using the specified encoding.
 	 * @param out - the <code>OutputStream</code> to write the String to.
 	 * @param toStream - the String to be written to the stream.
@@ -124,5 +139,9 @@ public final class L {
 		}
 		
 		return toStream;
+	}
+	
+	private static final void internalErr(String internalError) {
+		STREAM.streamWrite("INTERNAL L ERROR: " + internalError);
 	}
 }

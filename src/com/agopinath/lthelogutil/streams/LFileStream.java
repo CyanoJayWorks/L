@@ -1,8 +1,10 @@
 package com.agopinath.lthelogutil.streams;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 /**
 * Implementation of <code>LStream</code> that
@@ -11,21 +13,48 @@ import java.io.IOException;
 *
 */
 public class LFileStream extends LStream {
-	private FileWriter fileWriter;
+	private Writer fileWriter;
+	private long writeCount;
+	private long flushInterval;
 	
+	/**
+	 * Creates a new <code>LFileStream</code> that writes to the given
+	 * file using, appending dependent on parameter passed.
+	 * Sets the default flushing interval to every 5 writes.
+	 * @param logFile - file to write to
+	 * @param append - whether or not to append to file
+	 */
 	public LFileStream(File logFile, boolean append) {
 		try {
 			
 			if(!logFile.exists()) logFile.createNewFile();
 			
-			fileWriter = new FileWriter(logFile, append);
+			fileWriter = new BufferedWriter(new FileWriter(logFile, append));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		flushInterval = 5;
 	}
 	
+	/**
+	 * Creates a new <code>LFileStream</code> that writes to the given
+	 * file using, appending dependent on parameter passed.
+	 * Sets the default flushing interval to every 5 writes.
+	 * @param fileName - filename representing file to write to
+	 * @param append - whether or not to append to file
+	 */
 	public LFileStream(String fileName, boolean append) {
 		this(new File(fileName), append);
+	}
+	
+	/**
+	 * Sets the flush interval (number of writes required to be called before
+	 * flushing the stream) to the given parameter.
+	 * @param newFlushInterval - the new interval to flush at.
+	 */
+	public void setFlushInterval(final long newFlushInterval) {
+		flushInterval = newFlushInterval;
 	}
 	
 	@Override
@@ -54,10 +83,13 @@ public class LFileStream extends LStream {
 	}
 
 	@Override
-	public String streamWrite(String output) {
+	public String streamWrite(final String output) {
 		try {
-			fileWriter.write("");
-			fileWriter.flush();
+			fileWriter.write(output);
+			writeCount++;
+			
+			if(writeCount % flushInterval == 0)
+				fileWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -65,5 +97,4 @@ public class LFileStream extends LStream {
 		
 		return output;
 	}
-
 }

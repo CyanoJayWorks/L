@@ -33,7 +33,7 @@ public class LConsoleStream extends LStream {
 	}
 
 	@Override
-	public String streamWrite(String output) {
+	public String streamWrite(final String output) {
 		System.out.println(output);
 		
 		return output;

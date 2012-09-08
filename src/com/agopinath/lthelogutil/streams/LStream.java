@@ -26,5 +26,5 @@ public abstract class LStream implements ILStream {
 	/**
 	 * Template method for writing to the stream.
 	 */
-	public abstract String streamWrite(String output);
+	public abstract String streamWrite(final String output);
 }

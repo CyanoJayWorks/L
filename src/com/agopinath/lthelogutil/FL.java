@@ -29,12 +29,17 @@ import javax.swing.SwingUtilities;
 /**
  * Convenience class for on-the-fly logging to
  * "standard" console output and for other convenient
- * logging functinality. The class name "FL" stands for
+ * logging functinality. Instantiation
+ * of this class is prevented because it is inconsistent
+ * with the program design. The class name "FL" stands for
  * "Fast Log".
  * @author Ajay
  *
  */
-public final class FL {
+public final class Fl {
+	
+	// prevent instantiation
+	private Fl() {}
 	
 	/**
 	 * Logs the given String on-the-fly to
@@ -86,7 +91,7 @@ public final class FL {
 	 */
 	public static final String vis(final String toDisplay) {
 		if(GraphicsEnvironment.isHeadless()) {
-			LErr.internalErr("calling vis(java.lang.String) on headless system");
+			Li.internalErr("calling vis(java.lang.String) on headless system");
 			return null;
 		}
 		

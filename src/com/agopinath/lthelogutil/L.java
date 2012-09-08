@@ -26,7 +26,9 @@ import com.agopinath.lthelogutil.streams.LStream;
 /**
  * Provides logging functionality designed with very brief method calls
  * to prevent unnecessary verbosity, and takes care of otherwise tedious
- * code to log in a variety of different ways.
+ * code to log in a variety of different ways. Instantiation
+ * of this class is prevented because it is inconsistent
+ * with the program design.
  * 
  * @author Ajay
  *

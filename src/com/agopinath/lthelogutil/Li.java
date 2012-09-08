@@ -20,11 +20,17 @@ package com.agopinath.lthelogutil;
 
 /**
  * Contains logging methods to be used
- * internally only.
+ * internally only. Instantiation
+ * of this class is prevented because it is inconsistent
+ * with the program design.
  * @author Ajay
  *
  */
-public final class LErr {
+public final class Li {
+	
+	// prevent instantiation
+	private Li() {}
+	
 	static final String internalErr(final String errorMessage) {
 		System.out.println("INTERNAL L ERROR: " + errorMessage);
 		

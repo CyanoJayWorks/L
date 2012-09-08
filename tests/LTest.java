@@ -1,4 +1,4 @@
-import com.agopinath.lthelogutil.FL;
+import com.agopinath.lthelogutil.Fl;
 import com.agopinath.lthelogutil.L;
 import com.agopinath.lthelogutil.streams.LFileStream;
 
@@ -9,10 +9,10 @@ import com.agopinath.lthelogutil.streams.LFileStream;
  */
 public class LTest {
 	public static void main(String args[]) {
-		L.og("TESTING");
-		L.err("TESTING");
-		L.dbg("TESTING");
-		FL.og("d");
+		L.og("TESTING L DEFAULT OUTPUT");
+		L.err("TESTING L DEFAULT OUTPUT");
+		L.dbg("TESTING L DEFAULT OUTPUT");
+		Fl.og("FAST LOG OUTPUT");
 		
 		L.addLStream(new LFileStream("./tests/test1.txt", true), "test1logger");
 		L.og("should be sent to ./test/test1.txt and console only");

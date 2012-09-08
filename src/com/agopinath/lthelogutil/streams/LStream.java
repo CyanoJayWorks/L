@@ -9,22 +9,25 @@ package com.agopinath.lthelogutil.streams;
 public abstract class LStream implements ILStream {
 	
 	/**
-	 * Template method for opening the stream.
+	 * Method for opening the stream. Some implementations
+	 * don't require this.
 	 */
 	public abstract void streamOpen() ;
 	
 	/**
-	 * Template method for closing the stream.
+	 * Method for closing the stream. Some implementations
+	 * don't require this.
 	 */
 	public abstract void streamClose();
 	
 	/**
-	 * Template method for checking if the stream can be logged/written to.
+	 * Method for checking if the stream can be logged/written to. Some implementations
+	 * don't support this functionality.
 	 */
-	public abstract boolean isWritable();
+	public abstract boolean streamIsWritable();
 	
 	/**
-	 * Template method for writing to the stream.
+	 * Method for writing to the stream. All implementations <b>must</b> support this functionality.
 	 */
 	public abstract String streamWrite(final String output);
 }

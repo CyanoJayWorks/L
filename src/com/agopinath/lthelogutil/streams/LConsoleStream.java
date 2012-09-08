@@ -2,7 +2,9 @@ package com.agopinath.lthelogutil.streams;
 
 /**
  * Implementation of <code>LStream</code> that
- * writes to the default system console.
+ * writes to the default system console. Instantiation
+ * of this class is prevented as only one console output
+ * exists.
  * @author Ajay
  *
  */
@@ -13,6 +15,10 @@ public class LConsoleStream extends LStream {
 	// prevent instantiation
 	private LConsoleStream() {}
 	
+	/**
+	 * Returns an instance of <code>LConsoleStream</code>.
+	 * @return
+	 */
 	public static final LConsoleStream getInstance() {
 		return INSTANCE;
 	}
@@ -28,7 +34,7 @@ public class LConsoleStream extends LStream {
 	}
 
 	@Override
-	public boolean isWritable() {
+	public boolean streamIsWritable() {
 		return System.out.checkError();
 	}
 

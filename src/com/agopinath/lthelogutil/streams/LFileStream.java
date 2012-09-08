@@ -72,7 +72,7 @@ public class LFileStream extends LStream {
 	}
 
 	@Override
-	public boolean isWritable() {
+	public boolean streamIsWritable() {
 		try {
 			fileWriter.write("");
 		} catch(IOException e) {

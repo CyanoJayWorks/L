@@ -48,6 +48,12 @@ public final class L {
 		STREAM = LConsoleStream.getInstance();
 	}
 	
+	/**
+	 * Sets the <code>LStream</code> to which all logging calls
+	 * will <code>streamWrite</code> to.
+	 * @param newStream - the new stream to which to write to
+	 * @return The success status of the method.
+	 */
 	public static final boolean setLStream(LStream newStream) {
 		if(newStream == null) return false;
 		

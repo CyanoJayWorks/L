@@ -1,5 +1,11 @@
 package com.agopinath.lthelogutil.streams;
 
+/**
+ * Implementation of <code>LStream</code> that
+ * writes to the default system console.
+ * @author Ajay
+ *
+ */
 public class LConsoleStream extends LStream {
 	
 	private static final LConsoleStream INSTANCE = new LConsoleStream();

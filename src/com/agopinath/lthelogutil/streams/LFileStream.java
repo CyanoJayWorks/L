@@ -38,7 +38,7 @@ public class LFileStream extends LStream {
 	/**
 	 * Creates a new <code>LFileStream</code> that writes to the given
 	 * file using, appending dependent on parameter passed.
-	 * Sets the default flushing interval to every 5 writes.
+	 * Sets the default flushing interval to every write.
 	 * @param logFile - file to write to
 	 * @param append - whether or not to append to file
 	 */
@@ -52,13 +52,14 @@ public class LFileStream extends LStream {
 			e.printStackTrace();
 		}
 		
-		flushInterval = 5;
+		writeCount = 0;
+		flushInterval = 1;
 	}
 	
 	/**
 	 * Creates a new <code>LFileStream</code> that writes to the given
 	 * file using, appending dependent on parameter passed.
-	 * Sets the default flushing interval to every 5 writes.
+	 * Sets the default flushing interval to every write.
 	 * @param fileName - filename representing file to write to
 	 * @param append - whether or not to append to file
 	 */
@@ -103,7 +104,7 @@ public class LFileStream extends LStream {
 	@Override
 	public String streamWrite(final String output) {
 		try {
-			fileWriter.write(output);
+			fileWriter.write(output + "\r\n");
 			writeCount++;
 			
 			if(writeCount % flushInterval == 0)

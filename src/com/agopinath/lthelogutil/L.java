@@ -60,7 +60,9 @@ public final class L {
 	 * log to.
 	 * @param lStreamID - name of the <code>LStream</code> to remove.
 	 */
-	public static final void remoteLStream(String lStreamID) {
+	public static final void removeLStream(String lStreamID) {
+		LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
+		lStreamToRemove.streamClose();
 		STREAMS.removeLStream(lStreamID);
 	}
 	

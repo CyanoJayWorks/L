@@ -44,25 +44,41 @@ public class LStreamList {
 	
 	/**
 	 * Adds the specified <code>LStream</code> to the internal
-	 * list of <code>LStream</code>s.
+	 * list of <code>LStream</code>s. Duplicate <code>LStream</code>s
+	 * (determined by the IDs) are not allowed;
 	 * @param newStream - the <code>LStream</code> to add.
+	 * @return whether or not the operation succeeded.
 	 */
-	public void addLStream(final LStream newStream) {
+	public boolean addLStream(final LStream newStream) {
+		for(int i = 0; i < internalStreams.size(); i++) {
+			LStream currLStream = internalStreams.get(i);
+			
+			if(currLStream.getLStreamID().equalsIgnoreCase(newStream.getLStreamID())) {
+				return false;
+			}
+		}
+		
 		internalStreams.add(newStream);
+		return true;
 	}
 	
 	/**
 	 * Removes the <code>LStream</code> with the specified
 	 * ID.
 	 * @param lStreamID - ID of the <code>LStream</code> to remove.
+	 * @return whether or not the operation succeeded.
 	 */
-	public void removeLStream(final String lStreamID) {
+	public boolean removeLStream(final String lStreamID) {
 		for(int i = 0; i < internalStreams.size(); i++) {
 			LStream currLStream = internalStreams.get(i);
 			
-			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) 
+			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) {
 				internalStreams.remove(i);
+				return true;
+			}
 		}
+		
+		return false;
 	}
 	
 	/**

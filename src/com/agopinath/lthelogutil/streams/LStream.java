@@ -7,7 +7,8 @@ package com.agopinath.lthelogutil.streams;
  *
  */
 public abstract class LStream implements ILStream {
-	
+	protected String lStreamID;
+
 	/**
 	 * Method for opening the stream. Some implementations
 	 * don't require this.
@@ -30,4 +31,12 @@ public abstract class LStream implements ILStream {
 	 * Method for writing to the stream. All implementations <b>must</b> support this functionality.
 	 */
 	public abstract String streamWrite(final String output);
+	
+	public void setLStreamID(String newLStreamID) {
+		this.lStreamID = newLStreamID;
+	}
+	
+	public String getLStreamID() {
+		return this.lStreamID;
+	}
 }

@@ -1,3 +1,4 @@
+import com.agopinath.lthelogutil.FL;
 import com.agopinath.lthelogutil.L;
 
 /**
@@ -10,6 +11,6 @@ public class LTest {
 		L.og("TESTING");
 		L.err("TESTING");
 		L.dbg("TESTING");
-		L.vis("TESTING");
+		FL.og("d");
 	}
 }

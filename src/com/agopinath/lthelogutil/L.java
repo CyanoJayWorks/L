@@ -45,7 +45,17 @@ public final class L {
 	private L() {}
 	
 	static {
-		STREAM = new LConsoleStream();
+		STREAM = LConsoleStream.getInstance();
+	}
+	
+	public static final boolean setLStream(LStream newStream) {
+		if(newStream == null) return false;
+		
+ 		STREAM.streamClose();
+		STREAM = newStream;
+		STREAM.streamOpen();
+		
+		return true;
 	}
 	
 	/**
@@ -142,6 +152,7 @@ public final class L {
 	}
 	
 	private static final void internalErr(String internalError) {
+		System.out.println("INTERNAL L ERROR: " + internalError);
 		STREAM.streamWrite("INTERNAL L ERROR: " + internalError);
 	}
 }

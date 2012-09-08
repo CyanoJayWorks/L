@@ -1,35 +1,35 @@
 package com.agopinath.lthelogutil.streams;
 
 public class LConsoleStream extends LStream {
+	
+	private static final LConsoleStream INSTANCE = new LConsoleStream();
+	
+	// prevent instantiation
+	private LConsoleStream() {}
+	
+	public static final LConsoleStream getInstance() {
+		return INSTANCE;
+	}
+	
 	@Override
 	public void streamOpen() {
-		
+		// do nothing
 	}
 
 	@Override
 	public void streamClose() {
-		
+		// do nothing
 	}
 
 	@Override
-	protected void openStream() {
-		
-	}
-
-	@Override
-	protected void closeStream() {
-		
-	}
-
-	@Override
-	public boolean isStreamOpen() {
-		return true;
+	public boolean isWritable() {
+		return System.out.checkError();
 	}
 
 	@Override
 	public String streamWrite(String output) {
+		System.out.println(output);
 		
-		return null;
+		return output;
 	}
-
 }

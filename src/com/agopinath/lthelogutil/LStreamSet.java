@@ -61,7 +61,7 @@ public class LStreamSet {
 	 */
 	public boolean removeLStream(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
-			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) {
+			if(currLStream.getLStreamID().equals(lStreamID)) {
 				internalStreams.remove(currLStream);
 				return true;
 			}
@@ -76,7 +76,7 @@ public class LStreamSet {
 	 */
 	public LStream getLStreamByName(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
-			if(currLStream.getLStreamID().equalsIgnoreCase(lStreamID)) 
+			if(currLStream.getLStreamID().equals(lStreamID)) 
 				return currLStream;
 		}
 		

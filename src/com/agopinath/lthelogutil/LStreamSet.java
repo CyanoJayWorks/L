@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.agopinath.lthelogutil.streams.LStream;
+import com.agopinath.lthelogutil.streams.LStreamConfig;
 
 /**
  * Represents a set of <code>LStream</code>s
@@ -31,14 +32,14 @@ import com.agopinath.lthelogutil.streams.LStream;
  * @author Ajay
  *
  */
-public class LStreamSet {
+public final class LStreamSet {
 	private final Set<LStream> internalStreams;
 	
-	public LStreamSet(final int streamListSize) {
+    LStreamSet(final int streamListSize) {
 		internalStreams = Collections.synchronizedSet(new HashSet<LStream>(streamListSize));
 	}
 	
-	public LStreamSet() {
+	LStreamSet() {
 		this(5);
 	}
 	
@@ -49,7 +50,8 @@ public class LStreamSet {
 	 * @param newStream - the <code>LStream</code> to add.
 	 * @return whether or not the operation succeeded.
 	 */
-	public boolean addLStream(final LStream newStream) {
+	boolean addLStream(final LStream newStream) {
+		if(LStreamConfig.isLStreamIDUnassigned(newStream.getLStreamID())) return false;
 		return internalStreams.add(newStream);
 	}
 	
@@ -59,7 +61,7 @@ public class LStreamSet {
 	 * @param lStreamID - ID of the <code>LStream</code> to remove.
 	 * @return whether or not the operation succeeded.
 	 */
-	public boolean removeLStream(final String lStreamID) {
+	boolean removeLStream(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equals(lStreamID)) {
 				internalStreams.remove(currLStream);
@@ -74,7 +76,7 @@ public class LStreamSet {
 	 * Returns an <code>LStream</code> by the specified ID.
 	 * @param lStreamID - ID of the <code>LStream</code> to retrieve.
 	 */
-	public LStream getLStreamByName(final String lStreamID) {
+	LStream getLStreamByName(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equals(lStreamID)) 
 				return currLStream;
@@ -87,7 +89,7 @@ public class LStreamSet {
 	 * Returns an <code>Iterator</code> over the
 	 * <code>LStream</code>s in the internal set of <code>LStream</code>s.
 	 */
-	public Iterator<LStream> getLStreamIterator() {
+	Iterator<LStream> getLStreamIterator() {
 		synchronized(internalStreams) {
 			return internalStreams.iterator();
 		}

@@ -24,8 +24,8 @@ package com.agopinath.lthelogutil;
  * @author Ajay
  *
  */
-public class LErr {
-	protected static final String internalErr(final String errorMessage) {
+public final class LErr {
+	static final String internalErr(final String errorMessage) {
 		System.out.println("INTERNAL L ERROR: " + errorMessage);
 		
 		return errorMessage;

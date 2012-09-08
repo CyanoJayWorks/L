@@ -34,7 +34,7 @@ import javax.swing.SwingUtilities;
  * @author Ajay
  *
  */
-public class FL {
+public final class FL {
 	
 	/**
 	 * Logs the given String on-the-fly to

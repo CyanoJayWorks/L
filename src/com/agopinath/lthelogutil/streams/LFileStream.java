@@ -30,7 +30,7 @@ import java.io.Writer;
 * @author Ajay
 *
 */
-public class LFileStream extends LStream {
+public final class LFileStream extends LStream {
 	private Writer fileWriter;
 	private long writeCount;
 	private long flushInterval;
@@ -104,7 +104,7 @@ public class LFileStream extends LStream {
 	@Override
 	public String streamWrite(final String output) {
 		try {
-			fileWriter.write(output + "\r\n");
+			fileWriter.write(output + LStreamConfig.LINE_SEPARATOR);
 			writeCount++;
 			
 			if(writeCount % flushInterval == 0)

@@ -26,7 +26,7 @@ package com.agopinath.lthelogutil.streams;
  * @author Ajay
  *
  */
-public class LConsoleStream extends LStream {
+public final class LConsoleStream extends LStream {
 	
 	private static final LConsoleStream INSTANCE;
 	

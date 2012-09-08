@@ -25,7 +25,7 @@ package com.agopinath.lthelogutil.streams;
  *
  */
 public abstract class LStream implements ILStream {
-	protected String lStreamID;
+	protected String lStreamID = LStreamConfig.LSTREAMID_UNASSIGNED;
 
 	/**
 	 * Method for opening the stream. Some implementations

@@ -28,7 +28,9 @@ import com.agopinath.lthelogutil.streams.LStream;
  * to prevent unnecessary verbosity, and takes care of otherwise tedious
  * code to log in a variety of different ways. Instantiation
  * of this class is prevented because it is inconsistent
- * with the program design.
+ * with the program design. This class is thread-safe and handles
+ * any possible concurrency issues internally. For a faster, on-the-fly
+ * general-purpose implementation, using <code>Fl</code> is recommended.
  * 
  * @author Ajay
  *
@@ -51,9 +53,12 @@ public final class L {
 	 * @param newLStream - new <code>LStream</code> to add.
 	 * @param newLStreamID - name of the new <code>LStream</code>.
 	 */
-	public static final void addLStream(LStream newLStream, String newLStreamID) {
+	public static synchronized final void addLStream(LStream newLStream, String newLStreamID) {
 		newLStream.setLStreamID(newLStreamID);
-		STREAMS.addLStream(newLStream);
+		
+		synchronized(STREAMS) {
+			STREAMS.addLStream(newLStream);
+		}
 	}
 	
 	/**
@@ -62,10 +67,10 @@ public final class L {
 	 * log to.
 	 * @param lStreamID - name of the <code>LStream</code> to remove.
 	 */
-	public static final void removeLStream(String lStreamID) {
-		LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
-		lStreamToRemove.streamClose();
-		STREAMS.removeLStream(lStreamID);
+	public static synchronized final void removeLStream(String lStreamID) {
+			LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
+			lStreamToRemove.streamClose();
+			STREAMS.removeLStream(lStreamID);
 	}
 	
 	/**
@@ -76,9 +81,11 @@ public final class L {
 	public static final String og(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
-		for(;lStreamsIt.hasNext(); ) {
-			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite(toLog);
+		synchronized(lStreamsIt) {
+			for(;lStreamsIt.hasNext(); ) {
+				LStream currStream = lStreamsIt.next();
+				currStream.streamWrite(toLog);
+			}
 		}
 		
 		return toLog;
@@ -95,9 +102,11 @@ public final class L {
 	public static final String err(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
-		for(;lStreamsIt.hasNext(); ) {
-			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite("ERROR: " + toLog);
+		synchronized(lStreamsIt) {
+			for(;lStreamsIt.hasNext(); ) {
+				LStream currStream = lStreamsIt.next();
+				currStream.streamWrite("ERROR: " + toLog);
+			}
 		}
 		
 		return toLog;
@@ -114,9 +123,11 @@ public final class L {
 	public static final String dbg(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
-		for(;lStreamsIt.hasNext(); ) {
-			LStream currStream = lStreamsIt.next();
-			currStream.streamWrite("DEBUG: " + toLog);
+		synchronized(lStreamsIt) {
+			for(;lStreamsIt.hasNext(); ) {
+				LStream currStream = lStreamsIt.next();
+				currStream.streamWrite("DEBUG: " + toLog);
+			}
 		}
 		
 		return toLog;

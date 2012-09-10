@@ -32,7 +32,7 @@ import javax.swing.SwingUtilities;
  * logging functinality. Instantiation
  * of this class is prevented because it is inconsistent
  * with the program design. The class name "FL" stands for
- * "Fast Log".
+ * "<b>F</b>ast <b>L</b>og".
  * @author Ajay
  *
  */

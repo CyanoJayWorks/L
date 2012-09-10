@@ -22,7 +22,8 @@ package com.agopinath.lthelogutil;
  * Contains logging methods to be used
  * internally only. Instantiation
  * of this class is prevented because it is inconsistent
- * with the program design.
+ * with the program design. The class name "Li" stands for
+ * "<b>L</b>og for <b>I</b>nternal Use".
  * @author Ajay
  *
  */

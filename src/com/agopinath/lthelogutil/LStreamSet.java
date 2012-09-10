@@ -28,7 +28,10 @@ import com.agopinath.lthelogutil.streams.LStreamConfig;
 
 /**
  * Represents a set of <code>LStream</code>s
- * to be iterated over when logging.
+ * to be iterated over when logging. The <code>Iterator</code>
+ * retrieved from this class must be manually synchronized when used.
+ * All other operations that involve the modification of the internal
+ * streams set are thread-safe.
  * @author Ajay
  *
  */
@@ -50,7 +53,7 @@ public final class LStreamSet {
 	 * @param newStream - the <code>LStream</code> to add.
 	 * @return whether or not the operation succeeded.
 	 */
-	boolean addLStream(final LStream newStream) {
+	synchronized boolean addLStream(final LStream newStream) {
 		if(LStreamConfig.isLStreamIDUnassigned(newStream.getLStreamID())) return false;
 		return internalStreams.add(newStream);
 	}
@@ -61,7 +64,7 @@ public final class LStreamSet {
 	 * @param lStreamID - ID of the <code>LStream</code> to remove.
 	 * @return whether or not the operation succeeded.
 	 */
-	boolean removeLStream(final String lStreamID) {
+	synchronized boolean removeLStream(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equals(lStreamID)) {
 				internalStreams.remove(currLStream);
@@ -76,7 +79,7 @@ public final class LStreamSet {
 	 * Returns an <code>LStream</code> by the specified ID.
 	 * @param lStreamID - ID of the <code>LStream</code> to retrieve.
 	 */
-	LStream getLStreamByName(final String lStreamID) {
+	synchronized LStream getLStreamByName(final String lStreamID) {
 		for(LStream currLStream : internalStreams) {
 			if(currLStream.getLStreamID().equals(lStreamID)) 
 				return currLStream;
@@ -90,8 +93,6 @@ public final class LStreamSet {
 	 * <code>LStream</code>s in the internal set of <code>LStream</code>s.
 	 */
 	Iterator<LStream> getLStreamIterator() {
-		synchronized(internalStreams) {
-			return internalStreams.iterator();
-		}
+		return internalStreams.iterator();
 	}
 }

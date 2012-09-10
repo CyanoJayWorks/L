@@ -53,12 +53,9 @@ public final class L {
 	 * @param newLStream - new <code>LStream</code> to add.
 	 * @param newLStreamID - name of the new <code>LStream</code>.
 	 */
-	public static synchronized final void addLStream(LStream newLStream, String newLStreamID) {
+	public static final void addLStream(LStream newLStream, String newLStreamID) {
 		newLStream.setLStreamID(newLStreamID);
-		
-		synchronized(STREAMS) {
-			STREAMS.addLStream(newLStream);
-		}
+		STREAMS.addLStream(newLStream);
 	}
 	
 	/**
@@ -67,10 +64,10 @@ public final class L {
 	 * log to.
 	 * @param lStreamID - name of the <code>LStream</code> to remove.
 	 */
-	public static synchronized final void removeLStream(String lStreamID) {
-			LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
-			lStreamToRemove.streamClose();
-			STREAMS.removeLStream(lStreamID);
+	public static final void removeLStream(String lStreamID) {
+		LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
+		lStreamToRemove.streamClose();
+		STREAMS.removeLStream(lStreamID);
 	}
 	
 	/**

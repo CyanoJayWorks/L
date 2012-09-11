@@ -1,6 +1,7 @@
 import com.agopinath.lthelogutil.Fl;
 import com.agopinath.lthelogutil.L;
 import com.agopinath.lthelogutil.streams.LFileStream;
+import com.agopinath.lthelogutil.streams.LGuiStream;
 
 /**
  * Class used to test out logging functionality of <code>L</code>.
@@ -25,5 +26,8 @@ public class LTest {
 		
 		L.removeLStream("test3logger");
 		L.og("should be sent to test1.txt, test2.txt and console only after removing test3logger");
+		
+		L.addLStream(new LGuiStream(250, 300), "gui1logger");
+		L.og("logging to gui as well as other registered LStreams...");
 	}
 }

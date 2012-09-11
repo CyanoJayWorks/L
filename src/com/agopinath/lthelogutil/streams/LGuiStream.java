@@ -2,43 +2,50 @@ package com.agopinath.lthelogutil.streams;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class LGuiStream extends LStream {
-	private JFrame loggingFrame;
-	private JTextArea loggingArea;
-	private JPanel loggingPanel = new JPanel();
+	private JFrame logFrame;
+	private JTextArea logArea;
+	private JPanel logPanel = new JPanel();
 	
 	public LGuiStream(int width, int height) {
-		loggingFrame = new JFrame("Logging Window");
-		loggingArea = new JTextArea(30, 30);
+		logFrame = new JFrame("Logging Window");
+		logArea = new JTextArea();
+		logArea.setEditable(false);
 		
-		loggingFrame.setSize(width, height);
-		loggingFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		loggingFrame.setVisible(true);
+		logFrame.setSize(width, height);
+		logFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		logFrame.setVisible(false);
 	}
 	
 	@Override
 	public void streamOpen() {
-		loggingPanel.add(loggingArea);
-		loggingFrame.getContentPane().add(loggingPanel);
+		JScrollPane logAreaScroller = new JScrollPane(logArea);
+		logAreaScroller.setSize(logFrame.getSize());
+		logAreaScroller.setPreferredSize(logFrame.getSize());
 		
-		loggingFrame.setVisible(true);
+		logPanel.add(logAreaScroller);
+		logFrame.getContentPane().add(logPanel);
+		
+		logFrame.setVisible(true);
 	}
 
 	@Override
 	public void streamClose() {
-		loggingFrame.dispose();
+		logFrame.dispose();
 	}
 
 	@Override
 	public boolean streamIsWritable() {
-		return loggingFrame.isValid();
+		return logFrame.isValid();
 	}
 
 	@Override
 	public String streamWrite(String output) {
-		loggingArea.append(output + "\n");
-		return null;
+		logArea.append(output + "\n");
+		
+		return output;
 	}
 }

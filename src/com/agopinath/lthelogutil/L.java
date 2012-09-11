@@ -55,6 +55,7 @@ public final class L {
 	 */
 	public static final void addLStream(LStream newLStream, String newLStreamID) {
 		newLStream.setLStreamID(newLStreamID);
+		newLStream.streamOpen();
 		STREAMS.addLStream(newLStream);
 	}
 	

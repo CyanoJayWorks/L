@@ -26,16 +26,17 @@ package com.agopinath.lthelogutil.streams;
  */
 public abstract class LStream implements ILStream {
 	protected String lStreamID = LStreamConfig.LSTREAMID_UNASSIGNED;
-
+	protected boolean isStreamOpen = false;
+	
 	/**
 	 * Method for opening the stream. Some implementations
-	 * don't require this.
+	 * don't require this, but should be included nonetheless.
 	 */
-	public abstract void streamOpen() ;
+	public abstract void streamOpen();
 	
 	/**
 	 * Method for closing the stream. Some implementations
-	 * don't require this.
+	 * don't require this, but should be included nonetheless.
 	 */
 	public abstract void streamClose();
 	
@@ -49,6 +50,10 @@ public abstract class LStream implements ILStream {
 	 * Method for writing to the stream. All implementations <b>must</b> support this functionality.
 	 */
 	public abstract String streamWrite(final String output);
+	
+	public boolean isStreamOpen() {
+		return isStreamOpen;
+	}
 	
 	public void setLStreamID(String newLStreamID) {
 		this.lStreamID = newLStreamID;

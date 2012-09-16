@@ -15,19 +15,15 @@ public class LGuiStream extends LStream {
 	private JTextArea logArea;
 	private JPanel logPanel = new JPanel();
 	
+	private final int width, height;
+	
 	public LGuiStream(int width, int height) {
 		if(GraphicsEnvironment.isHeadless()) {
 			Fl.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
 		}
 		
-		logFrame = new JFrame("Logging Window");
-		logArea = new JTextArea();
-		logArea.setEditable(false);
-		
-		logFrame.setSize(width, height);
-
-		logFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		logFrame.setVisible(false);
+		this.width = width;
+		this.height = height;
 	}
 	
 	public LGuiStream() {
@@ -36,6 +32,19 @@ public class LGuiStream extends LStream {
 	
 	@Override
 	public void streamOpen() {
+		if(isStreamOpen) {
+			Fl.og("INTERNAL L ERROR: trying to re-open alreadyopen stream ");
+			return;
+		}
+		
+		logFrame = new JFrame("Logging Window");
+		logArea = new JTextArea();
+		logArea.setEditable(false);
+		
+		logFrame.setSize(width, height);
+		logFrame.setResizable(false);
+		logFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		JScrollPane logAreaScroller = new JScrollPane(logArea);
 		logAreaScroller.setSize(logFrame.getSize());
 		logAreaScroller.setPreferredSize(new Dimension((logFrame.getWidth()*3)/4, 
@@ -45,11 +54,14 @@ public class LGuiStream extends LStream {
 		logFrame.getContentPane().add(logPanel);
 		
 		logFrame.setVisible(true);
+		
+		isStreamOpen = true;
 	}
 
 	@Override
 	public void streamClose() {
 		logFrame.dispose();
+		isStreamOpen = false;
 	}
 
 	@Override

@@ -27,12 +27,15 @@ package com.agopinath.lthelogutil;
  * @author Ajay
  *
  */
+
+@Deprecated
 public final class Li {
 	
 	// prevent instantiation
 	private Li() {}
 	
-	static final String internalErr(final String errorMessage) {
+	@Deprecated
+	public static final String internalErr(final String errorMessage) {
 		System.out.println("INTERNAL L ERROR: " + errorMessage);
 		
 		return errorMessage;

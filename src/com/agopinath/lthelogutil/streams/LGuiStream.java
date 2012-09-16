@@ -1,9 +1,13 @@
 package com.agopinath.lthelogutil.streams;
 
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import com.agopinath.lthelogutil.Fl;
 
 public class LGuiStream extends LStream {
 	private JFrame logFrame;
@@ -11,6 +15,10 @@ public class LGuiStream extends LStream {
 	private JPanel logPanel = new JPanel();
 	
 	public LGuiStream(int width, int height) {
+		if(GraphicsEnvironment.isHeadless()) {
+			Fl.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
+		}
+		
 		logFrame = new JFrame("Logging Window");
 		logArea = new JTextArea();
 		logArea.setEditable(false);
@@ -18,6 +26,10 @@ public class LGuiStream extends LStream {
 		logFrame.setSize(width, height);
 		logFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		logFrame.setVisible(false);
+	}
+	
+	public LGuiStream() {
+		this(400, 350);
 	}
 	
 	@Override

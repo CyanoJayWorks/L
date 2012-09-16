@@ -91,7 +91,7 @@ public final class Fl {
 	 */
 	public static final String vis(final String toDisplay) {
 		if(GraphicsEnvironment.isHeadless()) {
-			Li.internalErr("calling vis(java.lang.String) on headless system");
+			Fl.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
 			return null;
 		}
 		

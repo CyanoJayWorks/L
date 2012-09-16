@@ -27,7 +27,7 @@ public class LTest {
 		L.removeLStream("test3logger");
 		L.og("should be sent to test1.txt, test2.txt and console only after removing test3logger");
 		
-		L.addLStream(new LGuiStream(250, 300), "gui1logger");
+		L.addLStream(new LGuiStream(), "gui1logger");
 		L.og("logging to gui as well as other registered LStreams...");
 	}
 }

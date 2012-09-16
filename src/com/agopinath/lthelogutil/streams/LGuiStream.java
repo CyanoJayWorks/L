@@ -1,5 +1,6 @@
 package com.agopinath.lthelogutil.streams;
 
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
@@ -24,19 +25,21 @@ public class LGuiStream extends LStream {
 		logArea.setEditable(false);
 		
 		logFrame.setSize(width, height);
+
 		logFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		logFrame.setVisible(false);
 	}
 	
 	public LGuiStream() {
-		this(400, 350);
+		this(550, 400);
 	}
 	
 	@Override
 	public void streamOpen() {
 		JScrollPane logAreaScroller = new JScrollPane(logArea);
 		logAreaScroller.setSize(logFrame.getSize());
-		logAreaScroller.setPreferredSize(logFrame.getSize());
+		logAreaScroller.setPreferredSize(new Dimension((logFrame.getWidth()*3)/4, 
+													   (logFrame.getHeight()*3)/4));
 		
 		logPanel.add(logAreaScroller);
 		logFrame.getContentPane().add(logPanel);
@@ -56,7 +59,7 @@ public class LGuiStream extends LStream {
 
 	@Override
 	public String streamWrite(String output) {
-		logArea.append(output + "\n");
+		logArea.append("  " + output + "\n");
 		
 		return output;
 	}

@@ -15,7 +15,7 @@ public class LTest {
 		L.dbg("TESTING L DEFAULT OUTPUT");
 		Fl.og("FAST LOG OUTPUT");
 		
-		L.addLStream(new LFileStream("./tests/test1.txt", true), "test1logger");
+		L.addLStream(new LFileStream("./tests/test4.txt", true), "test1logger");
 		L.og("should be sent to ./test/test1.txt and console only");
 		
 		L.addLStream(new LFileStream("./tests/test2.txt", true), "test2logger");
@@ -29,5 +29,7 @@ public class LTest {
 		
 		L.addLStream(new LGuiStream(), "gui1logger");
 		L.og("logging to gui as well as other registered LStreams...");
+		
+		L.removeLStream("gui1logger");
 	}
 }

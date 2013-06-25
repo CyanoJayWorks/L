@@ -74,9 +74,8 @@ public final class L {
 	/**
 	 * Logs the given String to the registered <code>LStream</code>s
 	 * @param toLog - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String og(final String toLog) {
+	public static final void og(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		synchronized(lStreamsIt) {
@@ -85,8 +84,6 @@ public final class L {
 				currStream.streamWrite(toLog);
 			}
 		}
-		
-		return toLog;
 	}
 	
 	/**
@@ -95,9 +92,8 @@ public final class L {
 	 * "ERROR: " is appended to the beginning of the text, and should
 	 * be used to debug errors.
 	 * @param toLog - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String err(final String toLog) {
+	public static final void err(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		synchronized(lStreamsIt) {
@@ -106,8 +102,6 @@ public final class L {
 				currStream.streamWrite("ERROR: " + toLog);
 			}
 		}
-		
-		return toLog;
 	}
 	
 	/**
@@ -116,9 +110,8 @@ public final class L {
 	 * "DEBUG: " is appended to the beginning of the text, and should
 	 * be used for general command-debugging.
 	 * @param toLog - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String dbg(final String toLog) {
+	public static final void dbg(final String toLog) {
 		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
 		
 		synchronized(lStreamsIt) {
@@ -127,7 +120,5 @@ public final class L {
 				currStream.streamWrite("DEBUG: " + toLog);
 			}
 		}
-		
-		return toLog;
 	}
 }

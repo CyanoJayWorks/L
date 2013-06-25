@@ -45,12 +45,9 @@ public final class Fl {
 	 * Logs the given String on-the-fly to
 	 * the "standard" console system output.
 	 * @param toPrint - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String og(final String toPrint) {
+	public static final void og(final String toPrint) {
 		System.out.println(toPrint);
-		
-		return toPrint;
 	}
 	
 	/**
@@ -60,12 +57,9 @@ public final class Fl {
 	 * "ERROR: " is appended to the beginning of the text, and should
 	 * be used to debug errors.
 	 * @param toPrint - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String err(final String toPrint) {
-		System.out.println("ERROR: " + toPrint);
-		
-		return toPrint;
+	public static final void err(final String toPrint) {
+		og("ERROR: " + toPrint);
 	}
 	
 	/**
@@ -75,24 +69,20 @@ public final class Fl {
 	 * "DEBUG: " is appended to the beginning of the text, and should
 	 * be used for general command-debugging.
 	 * @param toPrint - the String to be logged.
-	 * @return The same String that was logged.
 	 */
-	public static final String dbg(final String toPrint) {
-		System.out.println("DEBUG: " + toPrint);
-		
-		return toPrint;
+	public static final void dbg(final String toPrint) {
+		og("DEBUG: " + toPrint);
 	}
 
 	/**
 	 * Displays a String graphically on-the-fly using <code>JOptionPane.showMessageDialog</code>
 	 * as a graphic alternative to other logging functionalities
 	 * @param toDisplay - the String to be displayed.
-	 * @return The same String that was displayed.
 	 */
-	public static final String vis(final String toDisplay) {
+	public static final void vis(final String toDisplay) {
 		if(GraphicsEnvironment.isHeadless()) {
-			Fl.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
-			return null;
+			Fl.err("INTERNAL L ERROR: creating new LGuiStream on headless system ");
+			return;
 		}
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -101,8 +91,6 @@ public final class Fl {
 				JOptionPane.showMessageDialog(null, toDisplay);
 			}
 		});
-		
-		return toDisplay;
 	}
 	
 	/**
@@ -110,16 +98,13 @@ public final class Fl {
 	 * using <code>UTF-8</code> as the default encoding.
 	 * @param out - the <code>OutputStream</code> to write the String to.
 	 * @param toStream - the String to be written to the stream.
-	 * @return The same String that was written to stream.
 	 */
-	public static final String out(final OutputStream out, final String toStream) {
+	public static final void out(final OutputStream out, final String toStream) {
 		try {
 			out.write(toStream.getBytes(Charset.forName("UTF-8")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return toStream;
 	}
 	
 	/**
@@ -128,15 +113,36 @@ public final class Fl {
 	 * @param out - the <code>OutputStream</code> to write the String to.
 	 * @param toStream - the String to be written to the stream.
 	 * @param encoding - the String representing the encoding to be used.
-	 * @return The same String that was written to stream.
 	 */
-	public static final String out(final OutputStream out, final String toStream, final String encoding) {
+	public static final void out(final OutputStream out, final String toStream, final String encoding) {
 		try {
 			out.write(toStream.getBytes(encoding));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return toStream;
+	}
+	
+	public static final void og(final boolean toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final char toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final int toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final float toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final double toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final Object toPrint) {
+		og(toPrint.toString());
 	}
 }

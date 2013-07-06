@@ -1,5 +1,5 @@
-import com.agopinath.lthelogutil.Fl;
 import com.agopinath.lthelogutil.L;
+import com.agopinath.lthelogutil.Al;
 import com.agopinath.lthelogutil.streams.LFileStream;
 import com.agopinath.lthelogutil.streams.LGuiStream;
 
@@ -10,26 +10,26 @@ import com.agopinath.lthelogutil.streams.LGuiStream;
  */
 public class LTest {
 	public static void main(String args[]) {
-		L.og("TESTING L DEFAULT OUTPUT");
-		L.err("TESTING L DEFAULT OUTPUT");
-		L.dbg("TESTING L DEFAULT OUTPUT");
-		Fl.og("FAST LOG OUTPUT");
+		Al.og("TESTING L DEFAULT OUTPUT");
+		Al.err("TESTING L DEFAULT OUTPUT");
+		Al.dbg("TESTING L DEFAULT OUTPUT");
+		L.og("FAST LOG OUTPUT");
 		
-		L.addLStream(new LFileStream("./tests/test4.txt", true), "test1logger");
-		L.og("should be sent to ./test/test1.txt and console only");
+		Al.addLStream(new LFileStream("./tests/test4.txt", true), "test1logger");
+		Al.og("should be sent to ./test/test1.txt and console only");
 		
-		L.addLStream(new LFileStream("./tests/test2.txt", true), "test2logger");
-		L.og("should be sent to test1.txt, test2.txt and console only");
+		Al.addLStream(new LFileStream("./tests/test2.txt", true), "test2logger");
+		Al.og("should be sent to test1.txt, test2.txt and console only");
 		
-		L.addLStream(new LFileStream("./tests/test3.txt", true), "test3logger");
-		L.og("should be sent to test1.txt, test2.txt, test3.txt and console only");
+		Al.addLStream(new LFileStream("./tests/test3.txt", true), "test3logger");
+		Al.og("should be sent to test1.txt, test2.txt, test3.txt and console only");
 		
-		L.removeLStream("test3logger");
-		L.og("should be sent to test1.txt, test2.txt and console only after removing test3logger");
+		Al.removeLStream("test3logger");
+		Al.og("should be sent to test1.txt, test2.txt and console only after removing test3logger");
 		
-		L.addLStream(new LGuiStream(), "gui1logger");
-		L.og("logging to gui as well as other registered LStreams...");
+		Al.addLStream(new LGuiStream(), "gui1logger");
+		Al.og("logging to gui as well as other registered LStreams...");
 		
-		L.removeLStream("gui1logger");
+		Al.removeLStream("gui1logger");
 	}
 }

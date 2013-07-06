@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.agopinath.lthelogutil.Fl;
+import com.agopinath.lthelogutil.L;
 
 public class LGuiStream extends LStream {
 	private JFrame logFrame;
@@ -19,7 +19,7 @@ public class LGuiStream extends LStream {
 	
 	public LGuiStream(int width, int height) {
 		if(GraphicsEnvironment.isHeadless()) {
-			Fl.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
+			L.og("INTERNAL L ERROR: creating new LGuiStream on headless system ");
 		}
 		
 		this.width = width;
@@ -33,7 +33,7 @@ public class LGuiStream extends LStream {
 	@Override
 	public void streamOpen() {
 		if(isStreamOpen) {
-			Fl.og("INTERNAL L ERROR: trying to re-open alreadyopen stream ");
+			L.og("INTERNAL L ERROR: trying to re-open alreadyopen stream ");
 			return;
 		}
 		

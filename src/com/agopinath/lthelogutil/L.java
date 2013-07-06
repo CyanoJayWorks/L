@@ -18,107 +18,131 @@
 
 package com.agopinath.lthelogutil;
 
-import java.util.Iterator;
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 
-import com.agopinath.lthelogutil.streams.LConsoleStream;
-import com.agopinath.lthelogutil.streams.LStream;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
- * Provides logging functionality designed with very brief method calls
- * to prevent unnecessary verbosity, and takes care of otherwise tedious
- * code to log in a variety of different ways. Instantiation
+ * Convenience class for on-the-fly logging to
+ * "standard" console output and for other convenient
+ * logging functinality. Instantiation
  * of this class is prevented because it is inconsistent
- * with the program design. This class is thread-safe and handles
- * any possible concurrency issues internally. For a faster, on-the-fly
- * general-purpose implementation, using <code>Fl</code> is recommended.
- * 
+ * with the program design. The class name "FL" stands for
+ * "<b>F</b>ast <b>L</b>og".
  * @author Ajay
  *
  */
 public final class L {
-	private static final LStreamSet STREAMS;
 	
 	// prevent instantiation
 	private L() {}
 	
-	static {
-		STREAMS = new LStreamSet(5);
-		STREAMS.addLStream(LConsoleStream.getInstance());
-	}
-	
 	/**
-	 * Registers a new <code>LStream</code> with the specified
-	 * name and adds it to the set of <code>LStream</code>s to
-	 * log to.
-	 * @param newLStream - new <code>LStream</code> to add.
-	 * @param newLStreamID - name of the new <code>LStream</code>.
+	 * Logs the given String on-the-fly to
+	 * the "standard" console system output.
+	 * @param toPrint - the String to be logged.
 	 */
-	public static final void addLStream(LStream newLStream, String newLStreamID) {
-		newLStream.setLStreamID(newLStreamID);
-		newLStream.streamOpen();
-		STREAMS.addLStream(newLStream);
+	public static final void og(final String toPrint) {
+		System.out.println(toPrint);
 	}
 	
 	/**
-	 * De-registers the <code>LStream</code> with the specified
-	 * name and removes it from the set of <code>LStream</code>s to
-	 * log to.
-	 * @param lStreamID - name of the <code>LStream</code> to remove.
-	 */
-	public static final void removeLStream(String lStreamID) {
-		LStream lStreamToRemove = STREAMS.getLStreamByName(lStreamID);
-		lStreamToRemove.streamClose();
-		STREAMS.removeLStream(lStreamID);
-	}
-	
-	/**
-	 * Logs the given String to the registered <code>LStream</code>s
-	 * @param toLog - the String to be logged.
-	 */
-	public static final void og(final String toLog) {
-		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
-		
-		synchronized(lStreamsIt) {
-			for(;lStreamsIt.hasNext(); ) {
-				LStream currStream = lStreamsIt.next();
-				currStream.streamWrite(toLog);
-			}
-		}
-	}
-	
-	/**
-	 * Logs the given String to the registered <code>LStream</code>s
+	 * Logs the given String on-the-fly to
+	 * the "standard" console system output.
 	 * Differs from the method <code>og</code> in that
 	 * "ERROR: " is appended to the beginning of the text, and should
 	 * be used to debug errors.
-	 * @param toLog - the String to be logged.
+	 * @param toPrint - the String to be logged.
 	 */
-	public static final void err(final String toLog) {
-		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
+	public static final void err(final String toPrint) {
+		og("ERROR: " + toPrint);
+	}
+	
+	/**
+	 * Logs the given String on-the-fly to
+	 * the "standard" console system output.
+	 * Differs from the method <code>og</code> in that
+	 * "DEBUG: " is appended to the beginning of the text, and should
+	 * be used for general command-debugging.
+	 * @param toPrint - the String to be logged.
+	 */
+	public static final void dbg(final String toPrint) {
+		og("DEBUG: " + toPrint);
+	}
+
+	/**
+	 * Displays a String graphically on-the-fly using <code>JOptionPane.showMessageDialog</code>
+	 * as a graphic alternative to other logging functionalities
+	 * @param toDisplay - the String to be displayed.
+	 */
+	public static final void vis(final String toDisplay) {
+		if(GraphicsEnvironment.isHeadless()) {
+			L.err("INTERNAL L ERROR: creating new LGuiStream on headless system ");
+			return;
+		}
 		
-		synchronized(lStreamsIt) {
-			for(;lStreamsIt.hasNext(); ) {
-				LStream currStream = lStreamsIt.next();
-				currStream.streamWrite("ERROR: " + toLog);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, toDisplay);
 			}
+		});
+	}
+	
+	/**
+	 * Prints out a String on-the-fly to the specified <code>OutputStream</code>,
+	 * using <code>UTF-8</code> as the default encoding.
+	 * @param out - the <code>OutputStream</code> to write the String to.
+	 * @param toStream - the String to be written to the stream.
+	 */
+	public static final void out(final OutputStream out, final String toStream) {
+		try {
+			out.write(toStream.getBytes(Charset.forName("UTF-8")));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Logs the given String to the registered <code>LStream</code>s
-	 * Differs from the method <code>og</code> in that
-	 * "DEBUG: " is appended to the beginning of the text, and should
-	 * be used for general command-debugging.
-	 * @param toLog - the String to be logged.
+	 * Prints out a String on-the-fly to the specified <code>OutputStream</cod e>,
+	 * using the specified encoding.
+	 * @param out - the <code>OutputStream</code> to write the String to.
+	 * @param toStream - the String to be written to the stream.
+	 * @param encoding - the String representing the encoding to be used.
 	 */
-	public static final void dbg(final String toLog) {
-		Iterator<LStream> lStreamsIt = STREAMS.getLStreamIterator();
-		
-		synchronized(lStreamsIt) {
-			for(;lStreamsIt.hasNext(); ) {
-				LStream currStream = lStreamsIt.next();
-				currStream.streamWrite("DEBUG: " + toLog);
-			}
+	public static final void out(final OutputStream out, final String toStream, final String encoding) {
+		try {
+			out.write(toStream.getBytes(encoding));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+	
+	public static final void og(final boolean toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final char toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final int toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final float toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final double toPrint) {
+		og(""+toPrint);
+	}
+	
+	public static final void og(final Object toPrint) {
+		og(toPrint.toString());
 	}
 }

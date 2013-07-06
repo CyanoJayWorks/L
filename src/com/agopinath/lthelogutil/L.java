@@ -61,6 +61,19 @@ public final class L {
 	}
 	
 	/**
+	 * Logs the given String on-the-fly to
+	 * the "standard" console system output.
+	 * Differs from <code>og</code> in that
+	 * the String is formatted according to 
+	 * Java format specifications. Uses <code>printf</code>
+	 * internally.
+	 * @param toPrint - the String to be logged.
+	 */
+	public static final void pf(final String format, Object... args) {
+		System.out.printf(format, args);
+	}
+	
+	/**
 	 * Logs a newline on-the-fly to
 	 * the "standard" console system output.
 	 */

@@ -61,6 +61,14 @@ public final class L {
 	}
 	
 	/**
+	 * Logs a newline on-the-fly to
+	 * the "standard" console system output.
+	 */
+	public static final void ln() {
+		System.out.println();
+	}
+	
+	/**
 	 * Logs the given String on-the-fly to
 	 * the "standard" console system output.
 	 * Differs from the method <code>og</code> in that

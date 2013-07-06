@@ -30,7 +30,8 @@ import com.agopinath.lthelogutil.streams.LStream;
  * of this class is prevented because it is inconsistent
  * with the program design. This class is thread-safe and handles
  * any possible concurrency issues internally. For a faster, on-the-fly
- * general-purpose implementation, using <code>Fl</code> is recommended.
+ * general-purpose implementation, using <code>L</code> is recommended.
+ * The class name "Al" stands for "<b>A</b>dvanced <b>L</b>og".
  * 
  * @author Ajay
  *

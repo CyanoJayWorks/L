@@ -31,8 +31,7 @@ import javax.swing.SwingUtilities;
  * "standard" console output and for other convenient
  * logging functinality. Instantiation
  * of this class is prevented because it is inconsistent
- * with the program design. The class name "FL" stands for
- * "<b>F</b>ast <b>L</b>og".
+ * with the program design.
  * @author Ajay
  *
  */
@@ -48,6 +47,17 @@ public final class L {
 	 */
 	public static final void og(final String toPrint) {
 		System.out.println(toPrint);
+	}
+	
+	/**
+	 * Logs the given String on-the-fly to
+	 * the "standard" console system output.
+	 * Differs from <code>og</code> in that
+	 * output is not terminated with a newline.
+	 * @param toPrint - the String to be logged.
+	 */
+	public static final void ogp(final String toPrint) {
+		System.out.print(toPrint);
 	}
 	
 	/**
@@ -144,5 +154,29 @@ public final class L {
 	
 	public static final void og(final Object toPrint) {
 		og(toPrint.toString());
+	}
+	
+	public static final void ogp(final boolean toPrint) {
+		ogp(""+toPrint);
+	}
+	
+	public static final void ogp(final char toPrint) {
+		ogp(""+toPrint);
+	}
+	
+	public static final void ogp(final int toPrint) {
+		ogp(""+toPrint);
+	}
+	
+	public static final void ogp(final float toPrint) {
+		ogp(""+toPrint);
+	}
+	
+	public static final void ogp(final double toPrint) {
+		ogp(""+toPrint);
+	}
+	
+	public static final void ogp(final Object toPrint) {
+		ogp(toPrint.toString());
 	}
 }
